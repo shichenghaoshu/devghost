@@ -1,0 +1,53 @@
+[project]
+name = "devghost"
+version = "0.1.0"
+description = "DevGhost / GhostBench local-first personalized coding agent benchmark"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "Apache-2.0"
+dependencies = [
+  "fastapi>=0.124.0",
+  "httpx2>=0.28.1",
+  "pydantic>=2.12.0",
+  "python-multipart>=0.0.20",
+  "sqlalchemy>=2.0.44",
+  "uvicorn>=0.38.0"
+]
+
+[dependency-groups]
+dev = [
+  "mypy>=1.18.2",
+  "pytest>=9.0.1",
+  "ruff>=0.14.6"
+]
+
+[tool.uv.workspace]
+members = [
+  "python/ghostbench-core",
+  "python/harbor-adapter",
+  "python/evaluator",
+  "services/api",
+  "services/worker"
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["ghostbench_core", "ghostbench_api", "ghostbench_worker", "harbor_adapter", "evaluator"]
+
+[tool.pytest.ini_options]
+testpaths = ["python", "services"]
+pythonpath = [
+  "python/ghostbench-core",
+  "python/harbor-adapter",
+  "python/evaluator",
+  "services/api",
+  "services/worker"
+]

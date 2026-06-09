@@ -1,0 +1,27 @@
+{
+  "name": "@devghost/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "devghost": "./src/index.ts"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "eslint src test --ext .ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@devghost/arena-core": "workspace:*",
+    "@devghost/config": "workspace:*",
+    "@devghost/contracts": "workspace:*",
+    "@devghost/report": "workspace:*",
+    "@devghost/scanner": "workspace:*",
+    "@devghost/skill-adapters": "workspace:*",
+    "@devghost/skill-compiler": "workspace:*",
+    "@devghost/source-discovery": "workspace:*"
+  }
+}

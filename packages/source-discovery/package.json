@@ -1,0 +1,17 @@
+{
+  "name": "@devghost/source-discovery",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "eslint src test --ext .ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@devghost/contracts": "workspace:*"
+  }
+}

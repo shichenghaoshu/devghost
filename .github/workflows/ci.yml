@@ -1,0 +1,40 @@
+name: Pull Request CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.21.0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+      - uses: astral-sh/setup-uv@v6
+      - name: Install Node dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Install Python dependencies
+        run: uv sync --frozen
+      - name: TypeScript lint
+        run: pnpm lint
+      - name: TypeScript typecheck
+        run: pnpm typecheck
+      - name: TypeScript tests
+        run: pnpm test
+      - name: Python lint
+        run: uv run ruff check .
+      - name: Python typecheck
+        run: uv run mypy python services
+      - name: Python tests
+        run: uv run pytest
+      - name: Build
+        run: pnpm build
+      - name: Demo
+        run: make demo

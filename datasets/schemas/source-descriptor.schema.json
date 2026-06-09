@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://devghost.dev/schemas/source-descriptor.schema.json",
+  "title": "SourceDescriptor",
+  "type": "object",
+  "required": [
+    "id",
+    "kind",
+    "displayName",
+    "path",
+    "discoveryState",
+    "authorizationState",
+    "contentRead",
+    "estimatedFileCount",
+    "estimatedBytes",
+    "repositoryId",
+    "platform",
+    "sensitivity",
+    "discoveredAt"
+  ],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "codex_memory",
+        "codex_agents_md",
+        "codex_skill",
+        "claude_memory",
+        "claude_md",
+        "claude_rule",
+        "claude_skill",
+        "git_repository",
+        "git_commit",
+        "git_diff",
+        "test_log",
+        "manual_file",
+        "synthetic_fixture"
+      ]
+    },
+    "displayName": { "type": "string", "minLength": 1 },
+    "path": { "type": "string", "minLength": 1 },
+    "discoveryState": {
+      "type": "string",
+      "enum": ["discovered", "authorized", "scanned", "excluded", "blocked"]
+    },
+    "authorizationState": { "type": "string", "enum": ["pending", "authorized", "denied"] },
+    "contentRead": { "type": "boolean" },
+    "estimatedFileCount": { "type": "integer", "minimum": 0 },
+    "estimatedBytes": { "type": "integer", "minimum": 0 },
+    "repositoryId": { "type": ["string", "null"] },
+    "platform": { "type": "string", "minLength": 1 },
+    "sensitivity": { "type": "string", "enum": ["unknown", "public", "private", "secret"] },
+    "discoveredAt": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

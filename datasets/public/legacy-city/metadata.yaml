@@ -1,0 +1,8 @@
+schema_version: "1.0"
+world: Legacy City
+public_tests: true
+hidden_tests: false
+tags:
+  - legacy
+  - migration
+  - regression

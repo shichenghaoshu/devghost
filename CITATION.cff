@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+title: "GhostBench: Benchmarking Personalized Coding Agents Compiled from Developer Memory"
+message: "If you use GhostBench in research, cite this repository."
+type: software
+license: Apache-2.0
+authors:
+  - name: "DevGhost maintainers"
+version: "0.1.0"

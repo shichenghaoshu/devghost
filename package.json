@@ -1,0 +1,41 @@
+{
+  "name": "devghost-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.21.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "devghost": "tsx apps/cli/src/index.ts",
+    "dev": "turbo dev",
+    "lint": "eslint . --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:unit": "vitest run packages apps",
+    "test:integration": "vitest run tests/integration",
+    "test:security": "vitest run tests/security",
+    "build": "pnpm typecheck && turbo build",
+    "build:benchmark-static": "node scripts/build-benchmark-static.mjs",
+    "demo": "tsx apps/cli/src/index.ts demo",
+    "format:check": "prettier --check \"**/*.{ts,tsx,json,md,yml,yaml}\""
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^24.10.1",
+    "eslint": "^9.39.1",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.6",
+    "turbo": "^2.6.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.4",
+    "vitest": "^4.0.14"
+  },
+  "dependencies": {
+    "@asteasolutions/zod-to-openapi": "^8.1.0",
+    "commander": "^14.0.2",
+    "js-yaml": "^4.1.0",
+    "zod": "^4.1.13"
+  }
+}

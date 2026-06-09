@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://devghost.dev/schemas/benchmark-run.schema.json",
+  "title": "BenchmarkRun",
+  "type": "object",
+  "required": [
+    "runId",
+    "mode",
+    "condition",
+    "modelProvider",
+    "modelVersion",
+    "agent",
+    "harnessVersion",
+    "skillHash",
+    "taskSetVersion",
+    "tokenBudget",
+    "wallClockLimitSeconds",
+    "network",
+    "randomSeed",
+    "scorerVersion"
+  ],
+  "properties": {
+    "runId": { "type": "string" },
+    "mode": { "type": "string", "enum": ["local_unverified", "server_verified", "research"] },
+    "condition": {
+      "type": "string",
+      "enum": ["vanilla", "generic", "personalized", "cross_user", "oracle", "full_history"]
+    },
+    "modelProvider": { "type": "string" },
+    "modelVersion": { "type": "string" },
+    "agent": { "type": "string" },
+    "harnessVersion": { "type": "string" },
+    "skillHash": { "type": "string" },
+    "taskSetVersion": { "type": "string" },
+    "tokenBudget": { "type": "integer" },
+    "wallClockLimitSeconds": { "type": "integer" },
+    "network": { "type": "string" },
+    "randomSeed": { "type": "integer" },
+    "scorerVersion": { "type": "string" }
+  },
+  "additionalProperties": true
+}

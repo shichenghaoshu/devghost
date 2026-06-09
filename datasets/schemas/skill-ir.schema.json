@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://devghost.dev/schemas/skill-ir.schema.json",
+  "title": "SkillIR",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "profile_id",
+    "compiler",
+    "token_budget",
+    "identity",
+    "workflows",
+    "preferences",
+    "known_pitfalls",
+    "stale_items",
+    "safety"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "profile_id": { "type": "string" },
+    "compiler": { "type": "object" },
+    "token_budget": { "type": "integer", "minimum": 1 },
+    "identity": { "type": "object" },
+    "workflows": { "type": "array" },
+    "preferences": { "type": "array" },
+    "known_pitfalls": { "type": "array" },
+    "stale_items": { "type": "array" },
+    "safety": { "type": "object" }
+  },
+  "additionalProperties": false
+}

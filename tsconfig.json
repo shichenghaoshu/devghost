@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "useUnknownInCatchVariables": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@devghost/arena-core": ["packages/arena-core/src/index.ts"],
+      "@devghost/config": ["packages/config/src/index.ts"],
+      "@devghost/contracts": ["packages/contracts/src/index.ts"],
+      "@devghost/evidence": ["packages/evidence/src/index.ts"],
+      "@devghost/redaction": ["packages/redaction/src/index.ts"],
+      "@devghost/report": ["packages/report/src/index.ts"],
+      "@devghost/scanner": ["packages/scanner/src/index.ts"],
+      "@devghost/scoring": ["packages/scoring/src/index.ts"],
+      "@devghost/skill-adapters": ["packages/skill-adapters/src/index.ts"],
+      "@devghost/skill-compiler": ["packages/skill-compiler/src/index.ts"],
+      "@devghost/skill-ir": ["packages/skill-ir/src/index.ts"],
+      "@devghost/source-discovery": ["packages/source-discovery/src/index.ts"]
+    }
+  },
+  "include": ["apps/**/*.ts", "apps/**/*.tsx", "packages/**/*.ts", "tests/**/*.ts", "vitest.config.ts"],
+  "exclude": ["node_modules", ".next", "dist", "coverage"]
+}

@@ -1,0 +1,20 @@
+task_id = "feature-forge-001"
+task_version = "1.0.0"
+title = "Add a typed export option"
+domain = "product-engineering"
+difficulty = 3
+transfer_distance = "far"
+task_type = "feature"
+
+[environment]
+image_digest = "sha256:public-demo-placeholder"
+network = "none"
+cpu_limit = 2
+memory_mb = 4096
+disk_mb = 8192
+
+[budget]
+wall_clock_seconds = 1200
+max_agent_steps = 100
+max_input_tokens = 140000
+max_output_tokens = 22000

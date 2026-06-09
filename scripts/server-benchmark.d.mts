@@ -1,4 +1,5 @@
 export interface ServerBenchmarkScorecard {
+  productName: "VibeBenchmark";
   runId: string;
   label: "Server Run";
   verification: "Server Run / Unverified";
@@ -7,13 +8,16 @@ export interface ServerBenchmarkScorecard {
   agent: string;
   harnessVersion: string;
   taskSetVersion: string;
+  overallScore: number;
   finalScore: number;
   personalizationLift: number;
   skillLift: number;
   transferRadius: number;
   negativeTransferRate: number;
   safetyGrade: string;
-  worldScores: Array<{ world: string; score: number }>;
+  scoreBreakdown: Array<{ track: "ACM" | "Engineering"; world: string; description: string; score: number }>;
+  worldScores: Array<{ track: "ACM" | "Engineering"; world: string; description: string; score: number }>;
+  leaderboard: Array<{ rank: number; name: string; github: string; score: number; title: string }>;
   environment: {
     network: string;
     cpuLimit: number;

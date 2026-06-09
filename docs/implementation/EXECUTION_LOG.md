@@ -48,6 +48,17 @@ local absolute paths, raw secrets, and private source content.
 22. Verified `http://47.100.139.168/benchmark/scorecard.json` returns
     `finalScore: 84`, `verification: Server Run / Unverified`, and
     `serverVerified: false`.
+23. Renamed the user-facing benchmark surface to `VibeBenchmark`.
+24. Updated the server benchmark page to show one composite score by default,
+    with `<details>` for ACM and engineering breakdowns.
+25. Added humorous benchmark worlds, including `递归煎饼摊` and
+    `祖传屎山考古局`.
+26. Added a static `VibeLeaderboard` and a GitHub/name gate before local
+    browser-side score submission.
+27. Re-ran the server benchmark and verified
+    `http://47.100.139.168/benchmark/scorecard.json` returns
+    `productName: VibeBenchmark`, `overallScore: 84`, 8 breakdown items, and 4
+    leaderboard entries.
 
 ## Verification Notes
 

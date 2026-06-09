@@ -37,6 +37,17 @@ local absolute paths, raw secrets, and private source content.
     `.devghost/output/account-2026-06-09T08-32-15-724Z`.
 17. Checked that the account output did not contain the local absolute user path,
     server password, or raw fake-token fixtures.
+18. Added a Node-only server benchmark runner for environments without pnpm or
+    Python 3.12.
+19. Deployed the runner package to the benchmark server because the server could
+    not clone GitHub directly (`Empty reply from server`).
+20. Ran the server benchmark on the server and published artifacts to
+    `/var/www/benchmark/` and `/var/www/benchmark/latest/`.
+21. Verified `http://47.100.139.168/benchmark/` returns the server result page
+    with final score `84 / 100`.
+22. Verified `http://47.100.139.168/benchmark/scorecard.json` returns
+    `finalScore: 84`, `verification: Server Run / Unverified`, and
+    `serverVerified: false`.
 
 ## Verification Notes
 

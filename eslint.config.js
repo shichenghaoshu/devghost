@@ -14,6 +14,7 @@ export default tseslint.config(
       ".devghost/**",
       "docs/**",
       "eslint.config.js",
+      "scripts/**/*.d.mts",
       "scripts/**/*.mjs"
     ]
   },

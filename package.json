@@ -18,6 +18,7 @@
     "test:security": "vitest run tests/security",
     "build": "pnpm typecheck && turbo build",
     "build:benchmark-static": "node scripts/build-benchmark-static.mjs",
+    "benchmark:server-static": "node scripts/server-benchmark.mjs dist/server-benchmark",
     "demo": "tsx apps/cli/src/index.ts demo",
     "format:check": "prettier --check \"**/*.{ts,tsx,json,md,yml,yaml}\""
   },

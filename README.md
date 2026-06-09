@@ -70,7 +70,7 @@ Nginx at `/benchmark`.
 ```bash
 PORT=18084 \
 VB_BASE_PATH=/benchmark \
-VB_PUBLIC_BASE_URL=https://47-100-139-168.sslip.io/benchmark \
+VB_PUBLIC_BASE_URL=http://47.100.139.168/benchmark \
 VB_SESSION_SECRET=change-me \
 VB_DATA_DIR=/var/lib/vibebenchmark \
 GITHUB_CLIENT_ID=your-oauth-client-id \
@@ -81,8 +81,11 @@ node scripts/vibebenchmark-server.mjs
 GitHub OAuth callback URL:
 
 ```text
-https://47-100-139-168.sslip.io/benchmark/auth/github/callback
+http://47.100.139.168/benchmark/auth/github/callback
 ```
+
+An HTTPS sslip Nginx route is also available for later hardening, but the
+current public flow stays on the user's requested IP path for simplicity.
 
 ## Benchmark Method
 

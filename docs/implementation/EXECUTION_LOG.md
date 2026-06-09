@@ -91,6 +91,10 @@ local absolute paths, raw secrets, and private source content.
 38. Ran browser QA on the live page: desktop page identity and console health,
     no title/score-card overlap, disabled unauthenticated run controls, details
     expansion, and mobile 390px no-horizontal-overflow check.
+39. Set the live `VB_PUBLIC_BASE_URL` to
+    `http://47.100.139.168/benchmark` so the OAuth flow stays on the user's
+    requested simple IP path. The sslip HTTPS Nginx route remains available as
+    an optional hardening path.
 
 ## Verification Notes
 

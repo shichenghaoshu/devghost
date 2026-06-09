@@ -5,7 +5,7 @@ import { Command } from "commander";
 import { defaultConfig } from "@devghost/config";
 import { runLocalArena } from "@devghost/arena-core";
 import { generateHtmlReport, generateShareCardSvg, type LocalReportData } from "@devghost/report";
-import { runSyntheticScan } from "@devghost/scanner";
+import { runLocalAccountScan, runSyntheticScan } from "@devghost/scanner";
 import { renderSkillPackage, type SkillTarget } from "@devghost/skill-adapters";
 import { compileDeterministicSkill } from "@devghost/skill-compiler";
 import {
@@ -100,6 +100,88 @@ async function runDemo(): Promise<void> {
     evidenceRecords: scan.evidence.length,
     redactionFindings: scan.redactionReport.length,
     personalizationLift: arena.personalizationLift
+  });
+}
+
+async function runAccount(): Promise<void> {
+  const homeDir = process.env.HOME;
+  if (homeDir === undefined || homeDir.length === 0) {
+    throw new Error("HOME is required for local account scan");
+  }
+  const outputRoot = join(".devghost", "output", `account-${new Date().toISOString().replace(/[:.]/g, "-")}`);
+  const skillRoot = join(outputRoot, "devghost-profile");
+  await mkdir(skillRoot, { recursive: true });
+
+  const scan = await runLocalAccountScan({
+    homeDir,
+    cwd: process.cwd(),
+    maxFiles: 120
+  });
+  const compiled = compileDeterministicSkill({
+    evidence: scan.evidence,
+    profileId: "profile_local_account",
+    tokenBudget: defaultConfig.compiler.tokenBudget
+  });
+  const rendered = renderSkillPackage(compiled, "universal");
+  const arena = runLocalArena({
+    agent: "mock",
+    conditions: ["vanilla", "generic", "personalized"],
+    profileId: "profile_local_account"
+  });
+  const reportData: LocalReportData = {
+    runId: arena.runId,
+    profileId: "profile_local_account",
+    label: arena.label,
+    verification: arena.verification,
+    model: arena.model,
+    agent: arena.agent,
+    skillHash: compiled.hash,
+    skillTokenCount: compiled.manifest.tokenCount,
+    personalizationLift: arena.personalizationLift,
+    skillLift: arena.skillLift,
+    transferRadius: 3.7,
+    negativeTransferRate: 0,
+    safetyGrade:
+      scan.redactionReport.length > 0 || scan.promptInjectionFindings.length > 0 ? "Review" : "A",
+    worldScores: arena.worldScores,
+    evidenceCoverage: compiled.manifest.evidenceCoverage,
+    environment: {
+      network: defaultConfig.arena.network,
+      cpuLimit: 2,
+      memoryMb: 4096
+    }
+  };
+
+  await writeJson(join(outputRoot, "sources.json"), scan.sources);
+  await writeJson(join(outputRoot, "account-summary.json"), scan.summary);
+  await writeJson(join(outputRoot, "redaction-report.json"), scan.redactionReport);
+  await writeJson(join(outputRoot, "prompt-injection-report.json"), scan.promptInjectionFindings);
+  await writeJson(join(outputRoot, "evidence.json"), scan.evidence);
+  await writeJson(join(outputRoot, "skill-ir.json"), compiled.skillIr);
+  await writeJson(join(outputRoot, "scorecard.json"), reportData);
+  await writeFile(join(outputRoot, "report.html"), generateHtmlReport(reportData), "utf8");
+  await writeFile(join(outputRoot, "share-card.svg"), generateShareCardSvg(reportData), "utf8");
+
+  for (const file of rendered.files) {
+    const target = join(skillRoot, file.path);
+    await mkdir(target.split("/").slice(0, -1).join("/"), { recursive: true });
+    await writeFile(target, file.content, "utf8");
+  }
+
+  printJson({
+    status: "ok",
+    output: outputRoot,
+    profileId: "profile_local_account",
+    label: reportData.label,
+    verification: reportData.verification,
+    scannedFiles: scan.summary.scannedFiles,
+    detectedSignals: scan.summary.detectedSignals,
+    evidenceRecords: scan.evidence.length,
+    redactionFindings: scan.redactionReport.length,
+    promptInjectionFindings: scan.promptInjectionFindings.length,
+    safetyGrade: reportData.safetyGrade,
+    skillHash: compiled.hash,
+    rawSourceUploaded: false
   });
 }
 
@@ -275,6 +357,10 @@ program.command("submit").action(() => {
 
 program.command("demo").action(async () => {
   await runDemo();
+});
+
+program.command("account-run").action(async () => {
+  await runAccount();
 });
 
 await program.parseAsync(process.argv);

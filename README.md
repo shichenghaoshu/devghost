@@ -44,7 +44,12 @@ During development, use:
 ```bash
 pnpm devghost doctor
 pnpm demo
+pnpm devghost account-run
 ```
+
+`account-run` performs a local-only scan of the current machine account sources
+that DevGhost can detect. It writes sanitized artifacts under `.devghost/output`
+and does not upload raw source content.
 
 ## Benchmark Method
 

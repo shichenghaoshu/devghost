@@ -30,6 +30,13 @@ local absolute paths, raw secrets, and private source content.
 14. Ran `nginx -t`, reloaded Nginx, and verified:
     `http://47.100.139.168/benchmark` redirects to
     `http://47.100.139.168/benchmark/`.
+15. Added `devghost account-run` for a local-only account scan with anonymized
+    source aliases and lockfile/tool-output filtering.
+16. Ran `devghost account-run` against the current local account. The latest
+    sanitized output was written to
+    `.devghost/output/account-2026-06-09T08-32-15-724Z`.
+17. Checked that the account output did not contain the local absolute user path,
+    server password, or raw fake-token fixtures.
 
 ## Verification Notes
 

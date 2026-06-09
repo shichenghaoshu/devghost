@@ -59,6 +59,38 @@ local absolute paths, raw secrets, and private source content.
     `http://47.100.139.168/benchmark/scorecard.json` returns
     `productName: VibeBenchmark`, `overallScore: 84`, 8 breakdown items, and 4
     leaderboard entries.
+28. Added the dynamic Node-only VibeBenchmark server for `/benchmark`.
+29. Reworked the public page into a bright white, teal, and blue interface with
+    a single headline score, expandable ACM/engineering breakdowns, and a
+    persistent `VibeLeaderboard`.
+30. Added a real GitHub OAuth authorization-code flow:
+    `/benchmark/auth/github`, `/benchmark/auth/github/callback`, signed session
+    cookie, logout, `/benchmark/api/me`, `/benchmark/api/leaderboard`, and
+    authenticated `/benchmark/api/run`.
+31. Enforced GitHub login before score submission. The browser disables the name
+    input and run button until a signed GitHub session exists, and the server
+    returns `401 github_login_required` for unauthenticated run attempts.
+32. Added integration tests for page rendering, OAuth redirect construction,
+    unauthenticated run rejection, authenticated run creation, and leaderboard
+    persistence.
+33. Deployed the dynamic server to `/opt/devghost/scripts/vibebenchmark-server.mjs`
+    and managed it with the `vibebenchmark` systemd service on port `18084`.
+34. Backed up the remote Nginx config and changed both the IP HTTP server and the
+    sslip HTTPS server to proxy `/benchmark/` to `127.0.0.1:18084`.
+35. Verified `http://47.100.139.168/benchmark/` returns the dynamic bright
+    VibeBenchmark page, `/benchmark/api/leaderboard` returns ranked entries, and
+    unauthenticated `/benchmark/api/run` returns `401 github_login_required`.
+36. Verified the HTTPS sslip `/benchmark/` Nginx route from the server using an
+    explicit local resolve. Local workstation DNS resolved sslip to a private
+    interception address, so the externally advertised route remains the user's
+    requested `http://47.100.139.168/benchmark`.
+37. Confirmed the live server still needs GitHub OAuth App credentials in
+    `/etc/vibebenchmark.env`. Until `GITHUB_CLIENT_ID` and
+    `GITHUB_CLIENT_SECRET` are filled, `/benchmark/auth/github` correctly
+    returns `503 github_oauth_not_configured` instead of pretending login works.
+38. Ran browser QA on the live page: desktop page identity and console health,
+    no title/score-card overlap, disabled unauthenticated run controls, details
+    expansion, and mobile 390px no-horizontal-overflow check.
 
 ## Verification Notes
 

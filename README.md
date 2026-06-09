@@ -10,9 +10,16 @@ benchmark surfaces now use VibeBenchmark.
 ## Status
 
 - Implemented: local synthetic demo, deterministic skill compiler, mock arena,
-  HTML report, SVG share card, API/worker skeleton.
-- Experimental: server-side submission state machine and Harbor adapter bridge.
-- Planned: production verified arena, real hidden task pool, public leaderboard.
+  HTML report, SVG share card, API/worker skeleton, and the public
+  VibeBenchmark page.
+- Implemented for `/benchmark`: one headline score, expandable ACM and
+  engineering breakdowns, GitHub OAuth authorization-code login gate, display
+  name submission, and a persistent VibeLeaderboard.
+- Needs deployment secret: a GitHub OAuth App `Client ID` and `Client Secret`
+  must be provided through server environment variables before the live login
+  button can complete the GitHub round trip. These secrets are not committed.
+- Planned beyond the current public demo: production verified arena, real
+  hidden task pool, anti-cheat review, and partitioned leaderboards.
 
 ## 30 Second Demo
 
@@ -48,11 +55,34 @@ During development, use:
 pnpm devghost doctor
 pnpm demo
 pnpm devghost account-run
+node scripts/vibebenchmark-server.mjs
 ```
 
 `account-run` performs a local-only scan of the current machine account sources
 that VibeBenchmark can detect. It writes sanitized artifacts under `.devghost/output`
 and does not upload raw source content.
+
+## Public Server App
+
+The dynamic VibeBenchmark server is a Node-only app intended to run behind
+Nginx at `/benchmark`.
+
+```bash
+PORT=18084 \
+VB_BASE_PATH=/benchmark \
+VB_PUBLIC_BASE_URL=https://47-100-139-168.sslip.io/benchmark \
+VB_SESSION_SECRET=change-me \
+VB_DATA_DIR=/var/lib/vibebenchmark \
+GITHUB_CLIENT_ID=your-oauth-client-id \
+GITHUB_CLIENT_SECRET=your-oauth-client-secret \
+node scripts/vibebenchmark-server.mjs
+```
+
+GitHub OAuth callback URL:
+
+```text
+https://47-100-139-168.sslip.io/benchmark/auth/github/callback
+```
 
 ## Benchmark Method
 

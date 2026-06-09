@@ -95,6 +95,15 @@ local absolute paths, raw secrets, and private source content.
     `http://47.100.139.168/benchmark` so the OAuth flow stays on the user's
     requested simple IP path. The sslip HTTPS Nginx route remains available as
     an optional hardening path.
+40. Installed the user-provided GitHub OAuth Client ID and Client Secret into
+    `/etc/vibebenchmark.env` on the server. The secret value was not written to
+    repository files or logs.
+41. Restarted the `vibebenchmark` service and verified
+    `http://47.100.139.168/benchmark/auth/github` now returns `302 Found` to
+    `https://github.com/login/oauth/authorize` with redirect URI
+    `http://47.100.139.168/benchmark/auth/github/callback`.
+42. Verified the public page no longer renders the “GitHub OAuth not
+    configured” warning while still requiring login before benchmark upload.
 
 ## Verification Notes
 
